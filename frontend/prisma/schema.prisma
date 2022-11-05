@@ -1,0 +1,33 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Campaign {
+  id              Int             @id @default(autoincrement())
+  name            String          @db.VarChar(45)
+  type            Int             @default(0)
+  status          Int?            @default(0)
+  start_at        DateTime        @db.DateTime(0)
+  due_at          DateTime        @db.DateTime(0)
+  max_participant Int             @default(0)
+  create_at       DateTime        @default(now()) @db.DateTime(0)
+  Participation   Participation[]
+}
+
+model Participation {
+  id                      Int      @id @default(autoincrement())
+  campaign_id             Int
+  wallet_address          String   @db.VarChar(45)
+  contract_address_before String   @db.VarChar(45)
+  token_id_before         String   @db.VarChar(90)
+  contract_address_after  String?  @db.VarChar(45)
+  token_id_after          String?  @db.VarChar(90)
+  Campaign                Campaign @relation(fields: [campaign_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_campaign_id")
+
+  @@index([campaign_id], map: "fk_campaign_id_idx")
+}
