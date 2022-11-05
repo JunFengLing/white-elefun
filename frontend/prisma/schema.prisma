@@ -8,15 +8,16 @@ datasource db {
 }
 
 model Campaign {
-  id              Int             @id @default(autoincrement())
-  name            String          @db.VarChar(45)
-  type            Int             @default(0)
-  status          Int?            @default(0)
-  start_at        DateTime        @db.DateTime(0)
-  due_at          DateTime        @db.DateTime(0)
-  max_participant Int             @default(0)
-  create_at       DateTime        @default(now()) @db.DateTime(0)
-  Participation   Participation[]
+  id               Int             @id @default(autoincrement())
+  name             String          @db.VarChar(45)
+  type             Int             @default(0)
+  status           Int?            @default(0)
+  contract_address String?         @db.VarChar(45)
+  start_at         DateTime        @db.DateTime(0)
+  due_at           DateTime        @db.DateTime(0)
+  max_participant  Int             @default(0)
+  create_at        DateTime        @default(now()) @db.DateTime(0)
+  Participation    Participation[]
 }
 
 model Participation {

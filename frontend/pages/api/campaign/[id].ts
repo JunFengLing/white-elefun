@@ -9,7 +9,7 @@ export default async function handle(
 ) {
   if (req.method === 'GET') {
     const { id } = req.query;
-    const campaign = await prisma.campaign.findMany({
+    const campaign = await prisma.campaign.findUnique({
       where: {
         id: Number(id)
       }

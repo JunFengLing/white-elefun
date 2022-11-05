@@ -24,12 +24,13 @@ export default async function handle(
   }
 
   if (req.method === 'POST') {
-    const { name, type, maxParticipant, startAt, dueAt } = req.body;
+    const { name, type, maxParticipant, contractAddress, startAt, dueAt } = req.body;
     const campaign = await prisma.campaign.create({
       data: {
         name,
         type,
         max_participant: maxParticipant,
+        contract_address: contractAddress,
         start_at: startAt,
         due_at: dueAt
       },
