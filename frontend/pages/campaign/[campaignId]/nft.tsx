@@ -18,6 +18,7 @@ type IProps = {
 };
   
 const Nft: NextPage<IProps> = ({ walletAddress, getNftsForOwner, setSnackbarProps }) =>  {
+  const [campaign, setCampaign] = useState<any>(null);
   const [nfts, setNfts] = useState<any>([]);
   
   const router = useRouter();
@@ -28,13 +29,32 @@ const Nft: NextPage<IProps> = ({ walletAddress, getNftsForOwner, setSnackbarProp
     }
   }, [walletAddress]);
 
+  useEffect(() => {
+    if (router.query.campaignId) {
+      const campaignId = Number(router.query.campaignId);
+      getCampaign(campaignId);
+    }
+  }, [router.query.campaignId]);
+
+  const getCampaign = async (campaignId: Number) => {
+    try {
+      const res = await fetch(`/api/campaign/${ campaignId }`);
+      const campaign = await res.json();
+      console.log(campaign);
+      setCampaign(campaign);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   const getNfts = async (walletAddress: string) => {
     try {
       const nfts = await getNftsForOwner(walletAddress);
       console.log(nfts);
       setNfts(nfts.ownedNfts.map((nft: any) => ({
         ...nft,
-        isSelected: false
+        isSelected: false,
+        isValid: false
       })));
     } catch (err) {
       console.error(err);
@@ -62,6 +82,25 @@ const Nft: NextPage<IProps> = ({ walletAddress, getNftsForOwner, setSnackbarProp
     }
   };
 
+  const validate = () => {
+    if (!campaign.contract_address) {
+      return;
+    }
+
+    const _nfts = [...nfts];
+            
+    for (let i = 0; i < nfts.length; i++) {
+      if (nfts[i].isSelected && nfts[i].contract.address !== campaign.contract_address) {
+        console.log(nfts[i].contract.address);
+        _nfts[i].isSelected = !_nfts[i].isSelected;
+      } else {
+        _nfts[i].isValid = true;
+      }
+    }
+
+    setNfts(_nfts);
+  };
+
   return (
    <Container sx={{ py: 1 }}>
     <Typography variant="subtitle1" gutterBottom>
@@ -75,6 +114,7 @@ const Nft: NextPage<IProps> = ({ walletAddress, getNftsForOwner, setSnackbarProp
           onClick={ () => {
             const _nfts = [...nfts];
             _nfts[index].isSelected = !_nfts[index].isSelected;
+            _nfts[index].isValid = false;
             setNfts(_nfts);
           } }
         >
@@ -90,22 +130,24 @@ const Nft: NextPage<IProps> = ({ walletAddress, getNftsForOwner, setSnackbarProp
         </ImageListItem>
       ))}
     </ImageList>
+    { campaign?.contract_address && (
+        <Button
+          variant="outlined"
+          color="secondary"
+          disabled={ nfts.every((nft: any) => !nft.isSelected) }
+          sx={{ mr: 1 }}
+          onClick={ validate }
+        >
+          Validate
+        </Button>
+    )}
     <Button
       variant="outlined"
       color="secondary"
-      disabled={ nfts.every((nft: any) => !nft.isSelected) }
-      sx={{ mr: 1 }}
-      onClick={ () => {} }
-    >
-      Validate
-    </Button>
-    <Button
-      variant="outlined"
-      color="secondary"
-      disabled={ nfts.every((nft: any) => !nft.isSelected) }
+      disabled={ nfts.filter((nft: any) => nft.isSelected && (campaign?.contract_address ? nft.isValid : true)).length === 0 }
       onClick={ () => {
         createParticipation(nfts
-          .filter((nft: any) => nft.isSelected)
+          .filter((nft: any) => nft.isSelected && (campaign?.contract_address ? nft.isValid : true))
           .map((nft: any) => ({
             address: nft.contract.address,
             tokenId: nft.tokenId

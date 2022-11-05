@@ -24,6 +24,7 @@ const CreateCampaign: NextPage<IProps> = ({ setSnackbarProps }) =>  {
   const [name, setName] = useState("");
   const [type, setType] = useState(0);
   const [maxParticipant, setMaxParticipant] = useState(10);
+  const [contractAddress, setContractAddress] = useState('');
   const [startAt, setStartAt] = useState<string | null>(null);
   const [dueAt, setDueAt] = useState<string | null>(null);
 
@@ -40,6 +41,7 @@ const CreateCampaign: NextPage<IProps> = ({ setSnackbarProps }) =>  {
           name,
           maxParticipant,
           type,
+          contractAddress,
           startAt,
           dueAt
         })
@@ -89,6 +91,14 @@ const CreateCampaign: NextPage<IProps> = ({ setSnackbarProps }) =>  {
             <MenuItem value={ 1 }>Private</MenuItem>
           </Select>
         </FormControl>
+        <TextField
+          fullWidth
+          id="contract-adress"
+          label="Contract Address"
+          margin="normal"
+          value={ contractAddress }
+          onChange={ (e) => setContractAddress(e.target.value) }
+        />
         <FormControl fullWidth margin="normal">
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DesktopDatePicker

@@ -21,13 +21,14 @@ import type { NextPage } from 'next';
 
 
 type IProps = {
+  walletAddress: string,
   getNftMetadata: any
 };
 
 declare let window: any;
 
-const Detail: NextPage<IProps> = ({ getNftMetadata }) =>  {
-  const [campaign, setCampaign] = useState<any>([]);
+const Detail: NextPage<IProps> = ({ walletAddress, getNftMetadata }) =>  {
+  const [campaign, setCampaign] = useState<any>(null);
   const [participations, setParticipations] = useState<any>([]);
   const [nfts, setNfts] = useState<any>([]);
   const [signer, setSigner] = useState<any>(null);
@@ -79,7 +80,7 @@ const Detail: NextPage<IProps> = ({ getNftMetadata }) =>  {
       console.log('walletAddress:', walletAddress);
       console.log('contractAddress:', contractAddress);
       console.log('tokenId:', tokenId);
-      const result = await contract.operateSwap(walletAddress, contractAddress, tokenId, { gasLimit: 100000, gasPrice });
+      const result = await contract.operateSwap(walletAddress, contractAddress, tokenId, { gasLimit: 10000000, gasPrice });
       console.log('result: ', result);
     } catch (err) {
       console.error(err);
