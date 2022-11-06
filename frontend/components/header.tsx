@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import type { NextPage } from 'next'
 import {
   AppBar,
-  Box,
+  Avatar,
   Button,
   Container,
   Toolbar,
@@ -12,6 +12,7 @@ import {
 import AdbIcon from '@mui/icons-material/Adb';
 import { useRouter } from 'next/router'
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+
 
 
 const darkTheme = createTheme({
@@ -35,7 +36,8 @@ const Header: NextPage<HeaderProps> = ({ walletAddress, connectWalletPressed }) 
       <AppBar position="static">
         <Container maxWidth="xl">
           <Toolbar disableGutters>
-            <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+            {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
+            <Avatar alt="Elefun" src="/elefun.jpeg" sx={{ display: { xs: 'flnoneex', md: 'flex' }, mr: 3 }} />
             <Typography
                 variant="h6"
                 noWrap
@@ -71,7 +73,8 @@ const Header: NextPage<HeaderProps> = ({ walletAddress, connectWalletPressed }) 
                 "Connect Wallet"
               )}
             </Button>
-            <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+            {/* <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} /> */}
+            <Avatar alt="Elefun" src="/elefun.jpeg" sx={{  display: { xs: 'flex', md: 'none' }, mr: 3 }} />
             <Typography
                 // variant="h5"
                 noWrap

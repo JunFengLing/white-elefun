@@ -33,6 +33,8 @@ const Detail: NextPage<IProps> = ({ walletAddress, getNftMetadata }) =>  {
   const [nfts, setNfts] = useState<any>([]);
   const [signer, setSigner] = useState<any>(null);
   const [contract, setContract] = useState<any>(null);
+  const [swappedNFTAddress, setSwappedNFTAddress] = useState<any>([]);
+  const [swappedTokenId, setSwappedTokenId] = useState<any>([]);
   
   const router = useRouter();
 
@@ -48,8 +50,39 @@ const Detail: NextPage<IProps> = ({ walletAddress, getNftMetadata }) =>  {
       address: process.env.NEXT_PUBLIC_CONTRACT_ADDRESS,
     }, (event: any) => {
       console.log('event: ', event);
+      if (event.event === "NFTAddressSwapped") {
+        console.log('NFTAddressSwapped: ', event.args);
+        setSwappedNFTAddress(event.args[0]); 
+      }
+      if (event.event === "TokenIdSwapped") {
+        console.log('TokenIdSwapped: ', event.args);
+        setSwappedTokenId(event.args[0]); 
+      }
     });
   }, []);
+
+  useEffect(() => {
+    console.log('test', participations, swappedNFTAddress)
+    if (swappedNFTAddress.length === participations.length) {
+      let _participations = [...participations];
+      for (let i = 0; i < _participations.length; i++) {
+        _participations[i].contract_address_after = swappedNFTAddress[i]
+      }
+      console.log(_participations);
+      setParticipations(_participations);
+    }
+  }, [swappedNFTAddress]);
+
+  useEffect(() => {
+    if (swappedTokenId.length === participations.length) {
+      let _participations = [...participations];
+      for (let i = 0; i < _participations.length; i++) {
+        _participations[i].contract_token_id_after = swappedTokenId[i]
+      }
+      console.log(_participations);
+      setParticipations(_participations);
+    }
+  }, [swappedTokenId]);
 
   useEffect(() => {
     if (router.query.campaignId) {
