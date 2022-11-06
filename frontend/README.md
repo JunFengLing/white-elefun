@@ -36,5 +36,5 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 ## Prisma
 ```bash
 npm install @prisma/client
-npx prisma 
+npx prisma
 ```
