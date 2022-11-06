@@ -2,7 +2,6 @@
 // Tells the Solidity compiler to compile only from v0.8.13 to v0.9.0
 pragma solidity ^0.8.13;
 
-import "./ConvertLib.sol";
 
 // This is just a simple example of a coin-like contract.
 // It is not ERC20 compatible and cannot be expected to talk to other
@@ -13,14 +12,14 @@ contract MetaCoin {
 
 	event GetHolders(address[]);
 	event GetNTFs(address[]);
-	event GetTokenId(uint256[]);
+	event GetTokenId(string[]);
 
 	event GetNFTNum(uint256);
 
 	event GetMaxHolderNum(uint256);
 	event GetRand(uint256);
 	event NFTAddressSwapped(address[]);
-	event TokenIdSwapped(uint256[]);
+	event TokenIdSwapped(string[]);
 
 	struct SingleUserInput {
 		address owner;
@@ -28,7 +27,7 @@ contract MetaCoin {
 	}
 
 	address[] public swappedNFTView;
-	uint256[] public swappedTokenIdView;
+	string[] public swappedTokenIdView;
 	
 	constructor() {
 		balances[tx.origin] = 10000;
@@ -38,11 +37,11 @@ contract MetaCoin {
 		return swappedNFTView;
 	}
 	
-	function viewSwappedId() public view returns(uint[] memory){
+	function viewSwappedId() public view returns(string[] memory){
 		return swappedTokenIdView; 
 	}
 
-	function operateSwap(address[] memory holders, address[] memory NFTs, uint256[] memory tokenIds) public returns(address[] memory, uint256[] memory) {
+	function operateSwap(address[] memory holders, address[] memory NFTs, string[] memory tokenIds) public returns(address[] memory, string[] memory) {
 		emit GetHolders(holders);
 		emit GetNTFs(NFTs);
 		emit GetTokenId(tokenIds);
@@ -74,12 +73,12 @@ contract MetaCoin {
 		emit GetRand(psuedoRand);
 
 		address[] memory swappedNFTs = new address[](numTotalNFT);
-		uint256[] memory swappedTokenIds = new uint256[](numTotalNFT);	
+		string[] memory swappedTokenIds = new string[](numTotalNFT);	
 		for (uint i = 0; i < numTotalNFT; i++) {
 			uint256 offsetIndex = (i + psuedoRand)%numTotalNFT;
 			address targetNFT = NFTs[offsetIndex];
 			// address targetHolder = holders[offsetIndex];
-			uint256 targetTokenId = tokenIds[offsetIndex];
+			string memory targetTokenId = tokenIds[offsetIndex];
 			// address currentHolder = holders[i];
 			swappedNFTs[i] = targetNFT;
 			swappedTokenIds[i] = targetTokenId; 
