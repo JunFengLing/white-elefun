@@ -102,7 +102,7 @@ export default function App({ Component, pageProps }: IProps) {
           setSnackbarProps={ setSnackbarProps }
         />
       </Layout>
-      <Snackbar open={ snackbarProps.open } autoHideDuration={ 3000 } onClose={ handleClose }>
+      <Snackbar open={ snackbarProps.open } autoHideDuration={ 10000 } onClose={ handleClose }>
         <MuiAlert elevation={6} variant="filled" onClose={ handleClose } severity={ snackbarProps.severity } sx={{ width: '100%' }}>
           { snackbarProps.text }
         </MuiAlert>

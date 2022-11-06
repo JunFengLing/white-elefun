@@ -42,7 +42,7 @@ const Footer: NextPage = () => {
                 letterSpacing: '.1rem',
               }}
             >
-              Contact: Follow us on XXX
+              Contact: Follow us on @white_elefun Twitter
             </Typography>
           </Container>
         </AppBar>
