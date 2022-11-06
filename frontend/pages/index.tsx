@@ -10,7 +10,11 @@ import {
   Typography
 } from '@mui/material'
 import Image from 'next/image';
-import tianLanImg from '../public/tian_lan.jpeg'
+import athena from '../public/athena.jpeg'
+import jing from '../public/jing.jpeg'
+import map from '../public/map.jpeg'
+import skyblue from '../public/skyblue.jpeg'
+import unclebig from '../public/unclebig.jpeg'
 import { useRouter } from 'next/router';
 import type { NextPage } from 'next'
 import styles from '../styles/Home.module.css'
@@ -19,24 +23,24 @@ import { url } from 'inspector';
 
 const itemData = [
   {
-    img: tianLanImg,
-    name: 'Tian Lan'
+    img: athena,
+    name: 'Athena'
   },
   {
-    img: tianLanImg,
-    name: 'Map Shen',
+    img: jing,
+    name: 'Jing',
   },
   {
-    img: tianLanImg,
-    name: 'Jing Li',
+    img: map,
+    name: 'Map',
   },
   {
-    img: tianLanImg,
-    name: 'Joey Dai',
+    img: skyblue,
+    name: 'Skyblue',
   },
   {
-    img: tianLanImg,
-    name: 'Cai Chen'
+    img: unclebig,
+    name: 'UncleBig'
   }
 ];
 

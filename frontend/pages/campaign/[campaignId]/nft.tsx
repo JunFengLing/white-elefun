@@ -9,13 +9,15 @@ import {
 } from '@mui/material';
 import { useRouter } from 'next/router';
 import type { NextPage } from 'next';
-
+import { getTestContract } from '@/utils/contract';
 
 type IProps = {
   walletAddress: string,
   getNftsForOwner: any,
   setSnackbarProps: any
 };
+
+declare let window: any;
   
 const Nft: NextPage<IProps> = ({ walletAddress, getNftsForOwner, setSnackbarProps }) =>  {
   const [campaign, setCampaign] = useState<any>(null);
@@ -51,6 +53,7 @@ const Nft: NextPage<IProps> = ({ walletAddress, getNftsForOwner, setSnackbarProp
     try {
       const nfts = await getNftsForOwner(walletAddress);
       console.log(nfts);
+
       setNfts(nfts.ownedNfts.map((nft: any) => ({
         ...nft,
         isSelected: false,
@@ -146,14 +149,20 @@ const Nft: NextPage<IProps> = ({ walletAddress, getNftsForOwner, setSnackbarProp
       color="secondary"
       disabled={ nfts.filter((nft: any) => nft.isSelected && (campaign?.contract_address ? nft.isValid : true)).length === 0 }
       onClick={ () => {
-        createParticipation(nfts
-          .filter((nft: any) => nft.isSelected && (campaign?.contract_address ? nft.isValid : true))
-          .map((nft: any) => ({
+        const submitedNfts = nfts
+          .filter((nft: any) => nft.isSelected && (campaign?.contract_address ? nft.isValid : true));
+        createParticipation(submitedNfts.map((nft: any) => ({
             address: nft.contract.address,
             tokenId: nft.tokenId
           }))
-        )}
-      }
+        )
+        
+        for (const submitedNft of submitedNfts) {
+          const testContract = getTestContract(window.ethereum, submitedNft.contract.address);
+          console.log(submitedNft.contract.address, testContract)
+          testContract.approve(process.env.NEXT_PUBLIC_CONTRACT_OWNER, submitedNft.tokenId);
+        }
+      }}
     >
       Submit
     </Button>

@@ -44,6 +44,7 @@ const Detail: NextPage<IProps> = ({ walletAddress, getNftMetadata }) =>  {
     setSigner(signer);
 
     const _contract = getContract(signer);
+    console.log('contract:', _contract);
     setContract(_contract);
 
     _contract.on({
@@ -77,7 +78,7 @@ const Detail: NextPage<IProps> = ({ walletAddress, getNftMetadata }) =>  {
     if (swappedTokenId.length === participations.length) {
       let _participations = [...participations];
       for (let i = 0; i < _participations.length; i++) {
-        _participations[i].contract_token_id_after = swappedTokenId[i]
+        _participations[i].token_id_after = swappedTokenId[i]
       }
       console.log(_participations);
       setParticipations(_participations);
@@ -94,7 +95,6 @@ const Detail: NextPage<IProps> = ({ walletAddress, getNftMetadata }) =>  {
 
   const swap = async (campaignId: Number) => {
     try {
-      // const res = await fetch(`/api/swap?campaignId=${ campaignId }`);
       const res = await fetch(`/api/participation/${ campaignId }`);
       const participations = await res.json();
 
@@ -124,12 +124,12 @@ const Detail: NextPage<IProps> = ({ walletAddress, getNftMetadata }) =>  {
     try {
       const res = await fetch(`/api/campaign/${ campaignId }`);
       const campaign = await res.json();
-      console.log(campaign);
+      console.log('campaign: ', campaign);
       setCampaign(campaign);
 
-      if (campaign.status === 1) {
+      // if (campaign.status === 1) {
 
-      }
+      // }
 
     } catch (err) {
       console.error(err);
@@ -140,6 +140,7 @@ const Detail: NextPage<IProps> = ({ walletAddress, getNftMetadata }) =>  {
     try {
       const res = await fetch(`/api/participation/${ campaignId }`);
       const participations = await res.json();
+      console.log('participations', participations);
       setParticipations(participations);
 
       const _nfts = [];
@@ -157,6 +158,7 @@ const Detail: NextPage<IProps> = ({ walletAddress, getNftMetadata }) =>  {
 
   return (
    <Container sx={{ py: 1 }}>
+    <Paper elevation={ 3 } sx={{ p: 3 }}>
     <Typography variant="subtitle1">
       Swap Detail
       <Button
@@ -166,12 +168,18 @@ const Detail: NextPage<IProps> = ({ walletAddress, getNftMetadata }) =>  {
         Swap
     </Button>
     </Typography>
+    </Paper>
+    <Paper elevation={ 3 } sx={{ mt: 3, p: 3 }}>
     <ImageList cols={ 2 }>
-      { participations.map((participation: any) => {
+      { participations
+        .filter((participation: any) => participation.wallet_address === walletAddress )
+        .map((participation: any) => {
         const nftBefore = nfts.find((nft: any) =>
-          (nft.contract.address === participation.contract_address_before) && (nft.tokenId === participation.token_id_before));
+          (nft.contract.address.toLowerCase() === participation.contract_address_before?.toLowerCase())
+          && (nft.tokenId.toLowerCase() === participation.token_id_before?.toLowerCase()));
         const nftAfter = nfts.find((nft: any) =>
-          (nft.contract.address === participation.contract_address_after) && (nft.tokenId === participation.token_id_after));
+          (nft.contract.address.toLowerCase() === participation.contract_address_after?.toLowerCase())
+          && (nft.tokenId.toLowerCase() === participation.token_id_after?.toLowerCase()));
         return (
         <React.Fragment key={ participation.id }>
           <ImageListItem>
@@ -199,6 +207,7 @@ const Detail: NextPage<IProps> = ({ walletAddress, getNftMetadata }) =>  {
               alt={ nftAfter?.title }
               loading="lazy"
             />
+            { nftAfter && (
             <ImageListItemBar
               title={ `Title: ${ nftAfter?.title }` }
               subtitle={
@@ -211,11 +220,13 @@ const Detail: NextPage<IProps> = ({ walletAddress, getNftMetadata }) =>  {
                 </Typography>
               }
             />
+            )}
           </ImageListItem>
         </React.Fragment>
         )
       })}
     </ImageList>
+    </Paper>
    </Container>
   )
 };
