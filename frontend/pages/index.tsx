@@ -55,41 +55,55 @@ const Home: NextPage<IProps> = ({ walletAddress, connectWalletPressed }) =>  {
 
   return (
     <div className="home">
-    <Container sx={{ py: 3 }}>
-      <Paper elevation={ 0 } sx={{ p: 3 }} style={{ background: 'none' }}>
-        <Typography variant="h1" gutterBottom style={{ color: 'white', fontWeight: 700, opacity: 1 }}>
-          Introdcution
+    <Container sx={{ py: 3, paddingTop: '150px' }}>
+      <Paper elevation={ 0 } sx={{ p: 4 }} style={{ background: 'none' }}>
+      <Typography variant="h5" gutterBottom sx={{ fontFamily: 'monospace', color: 'white', opacity: 1 }}>      
+      </Typography>
+      <Typography variant="h5" gutterBottom sx={{ fontFamily: 'monospace', color: 'white', opacity: 1 }}>
+          Looking for ways to engage your NFT communities?
         </Typography>
-        <Typography variant="h5" gutterBottom style={{ color: 'white', opacity: 1 }}>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos
-          blanditiis tenetur unde suscipit, quam beatae rerum inventore consectetur,
-          neque doloribus, cupiditate numquam dignissimos laborum fugiat deleniti? Eum
-          quasi quidem quibusdam.
+        <Typography variant="h5" gutterBottom sx={{ fontFamily: 'monospace', color: 'white', opacity: 1 }}>      
+       </Typography>
+        <Typography variant="h5" gutterBottom sx={{ fontFamily: 'monospace', color: 'white', opacity: 1 }}>
+          Host or join NFT swap party with White Elefun!
+        </Typography>
+        <Typography variant="h5" gutterBottom sx={{ fontFamily: 'monospace', color: 'white', opacity: 1 }}>      
+        </Typography>
+        <Typography variant="h5" gutterBottom sx={{ fontFamily: 'monospace', color: 'white', opacity: 1 }}>
+          Connect wallet to start hosting a swap party, or join existing parties ⬇
+        </Typography>
+        <Typography variant="h5" gutterBottom sx={{ fontFamily: 'monospace', color: 'white', opacity: 1 }}>
+               
         </Typography>
         { walletAddress ? (
           <Button
             variant="outlined"
             color="secondary"
-            sx={{ mt: 6 }}
+            sx={{ mt: 5, fontFamily: 'monospace' }}
             style={{ width: '300px', height: '80px', fontSize: '30px', color: 'white', borderColor: 'white' }}
             onClick={ () => { router.push('/campaign') } }
           >
             Campaign
           </Button> ) : (
-          <Button variant="outlined" color="secondary" onClick={ connectWalletPressed }>
+          <Button
+            variant="outlined"
+            color="secondary"
+            sx={{ mt: 5, fontFamily: 'monospace' }}
+            style={{ width: '600px', height: '80px', fontSize: '30px', color: 'white', borderColor: 'white' }} onClick={ connectWalletPressed }
+          >
             Connect Wallet to Start
           </Button>
         )}
       </Paper>
       <Paper elevation={ 0 } sx={{ mt: 3, p: 3 }} style={{ background: 'none' }}>
-        <Typography variant="h3" gutterBottom style={{ textAlign: 'center', color: 'white', fontWeight: 700, opacity: 1 }}>
+        <Typography variant="h3" gutterBottom sx={{ fontFamily: 'monospace', textAlign: 'center', color: 'white', fontWeight: 700, opacity: 1 }}>
           Team
         </Typography>
         <ImageList cols={ 5 } sx={{ mt: 5 }}>
         { itemData.map((item: any, index: any) => (
           <ImageListItem key={index} sx={{ alignItems: 'center' }}>
             <ImageListItemBar
-              title={ <span style={{ fontSize: '20px', color: 'white' }}>{ item.name }</span> }
+              title={ <span style={{ fontSize: '20px', color: 'white', fontFamily: 'monospace' }}>{ item.name }</span> }
               // subtitle={<span>by: {item.name}</span>}
               position="below"
             />

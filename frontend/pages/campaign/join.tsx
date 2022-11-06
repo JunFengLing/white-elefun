@@ -40,7 +40,8 @@ const JoinCampaign: NextPage = () =>  {
         <Table aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>Name</TableCell>
+              <TableCell align="right">Id</TableCell>
+              <TableCell align="right">Name</TableCell>
               <TableCell align="right">Type</TableCell>
               <TableCell align="right">Start At</TableCell>
               <TableCell align="right">Due At</TableCell>
@@ -53,8 +54,11 @@ const JoinCampaign: NextPage = () =>  {
               <TableRow
                 key={ campaign.id }
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              >
+              > 
                 <TableCell component="th" scope="row">
+                  { campaign.id }
+                </TableCell>
+                <TableCell align="right" component="th" scope="row">
                   { campaign.name }
                 </TableCell>
                 <TableCell align="right" component="th" scope="row">
