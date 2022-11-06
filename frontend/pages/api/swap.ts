@@ -1,6 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import prisma from '@/utils/prisma';
-import { helloWorldContract } from '@/utils/contract';
 
 
 // GET/POST /api/swap
