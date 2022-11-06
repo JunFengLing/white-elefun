@@ -52,6 +52,16 @@ module.exports = {
       provider: () => new HDWalletProvider('05e0a9c62d9c58d3bff002429e945112f0c2eb68e57ef9a5840ed6bcb37ebb33','https://eth-goerli.g.alchemy.com/v2/QqVpJJeR3vN_oDqbv1xqo2iuB4Dhh1SP'),
       network_id: 5,       // Goerli's id
       chain_id: 5
+    },
+    'optimism-local': {
+      provider: () => {
+        return new HDWalletProvider('XXXXXX', 'http://localhost:8545')
+      },
+      network_id: "420"
+    },
+    'optimism-goerli': {
+      provider: () => new HDWalletProvider('05e0a9c62d9c58d3bff002429e945112f0c2eb68e57ef9a5840ed6bcb37ebb33', 'https://opt-goerli.g.alchemy.com/v2/IybWKow280qQCKupasFgNmZ1_4rt3dc0'),
+      network_id: 420
     }
   },
 
