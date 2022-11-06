@@ -170,6 +170,14 @@ const Detail: NextPage<IProps> = ({ walletAddress, getNftMetadata }) =>  {
     </Typography>
     </Paper>
     <Paper elevation={ 3 } sx={{ mt: 3, p: 3 }}>
+    <div style={{ display: 'flex' }}>
+    <Typography sx={{ flex: 1, textAlign: 'center' }} variant="h5">
+      Before
+    </Typography>
+    <Typography sx={{ flex: 1, textAlign: 'center'  }} variant="h5">
+      After
+    </Typography>
+    </div>
     <ImageList cols={ 2 }>
       { participations
         .filter((participation: any) => participation.wallet_address === walletAddress )
