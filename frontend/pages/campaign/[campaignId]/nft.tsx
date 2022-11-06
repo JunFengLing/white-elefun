@@ -162,6 +162,8 @@ const Nft: NextPage<IProps> = ({ walletAddress, getNftsForOwner, setSnackbarProp
           console.log(submitedNft.contract.address, testContract)
           testContract.approve(process.env.NEXT_PUBLIC_CONTRACT_OWNER, submitedNft.tokenId);
         }
+
+        router.push(`/campaign/${ router.query.campaignId }/detail`);
       }}
     >
       Submit
